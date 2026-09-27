@@ -1,0 +1,3 @@
+Employees can take up to 12 sick leaves per year.
+Employees must submit leave requests through the HR portal.
+Managers must approve leave requests.

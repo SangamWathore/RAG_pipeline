@@ -1,0 +1,13 @@
+.venv/
+.env
+__pycache__/
+*.pyc
+
+app.db
+
+vectorstore/
+documents/
+README.md
+documents_metadata_json
+document_metadata.json
+.python-version
