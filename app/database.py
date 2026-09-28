@@ -18,3 +18,15 @@ SessionLocal = sessionmaker(
 )
 
 Base = declarative_base()
+
+
+# it gives each request a database session and closes it afterward
+def get_db():
+
+    db = SessionLocal()
+
+    try:
+        yield db
+
+    finally:
+        db.close()
