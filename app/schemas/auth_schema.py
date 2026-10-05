@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 class RegisterRequest(BaseModel):
     username : str
@@ -8,8 +8,7 @@ class UserResponse(BaseModel):
     id:int
     username:str
 
-    class config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class LoginRequest(BaseModel):
 

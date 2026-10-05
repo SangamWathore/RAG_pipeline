@@ -4,7 +4,7 @@ sqlalchemy
 pydantic
 python-dotenv
 PyJWT
-pwdlib
+pwdlib[argon2]
 python-multipart
 langchain-community
 langchain-openai

@@ -9,7 +9,10 @@ test.db
 
 vectorstore/
 documents/
+tests/
 README.md
 documents_metadata_json
 document_metadata.json
 .python-version
+
+
