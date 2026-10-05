@@ -43,11 +43,9 @@ def test_ask_returns_answer_and_sources(
             ],
         }
 
-    monkeypatch.setattr(
-        rag_routes.rag_service,
-        "ask",
-        fake_ask,
-    )
+    monkeypatch.setattr(rag_routes, "get_rag_service", lambda: SimpleNamespace(
+        ask=fake_ask,
+    ))
 
     response = authenticated_client.post(
         "/ask",
@@ -82,12 +80,14 @@ def test_ask_returns_empty_sources(
     monkeypatch,
 ):
     monkeypatch.setattr(
-        rag_routes.rag_service,
-        "ask",
-        lambda question: {
-            "answer": "I could not find relevant information.",
-            "sources": [],
-        },
+        rag_routes,
+        "get_rag_service",
+        lambda: SimpleNamespace(
+            ask=lambda question: {
+                "answer": "I could not find relevant information.",
+                "sources": [],
+            },
+        ),
     )
 
     response = authenticated_client.post(

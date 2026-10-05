@@ -6,7 +6,15 @@ from app.models.user_model import User
 
 router = APIRouter()
 print("started rag router form main.py import lines 1")
-rag_service = RAGService()
+rag_service = None
+
+
+def get_rag_service():
+    """Load the vector store only when the ask endpoint is used."""
+    global rag_service
+    if rag_service is None:
+        rag_service = RAGService()
+    return rag_service
 
 @router.post("/ask", response_model=AskResponse)
 def ask(
@@ -19,7 +27,7 @@ def ask(
             detail="Question cannot be empty",
         )
 
-    answer = rag_service.ask(question)
+    answer = get_rag_service().ask(question)
 
     return {
         "question" : question,
