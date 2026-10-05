@@ -10,6 +10,11 @@ class RAGService:
 
         self.vector_repository = VectorRepository()
 
+        if not self.vector_repository.exists():
+            raise FileNotFoundError(
+                "No indexed documents are available. Upload a document first."
+            )
+
         self.vector_repository.load()
 
         self.llm = ChatOpenAI(

@@ -27,7 +27,13 @@ def ask(
             detail="Question cannot be empty",
         )
 
-    answer = get_rag_service().ask(question)
+    try:
+        answer = get_rag_service().ask(question)
+    except FileNotFoundError as error:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=str(error),
+        ) from error
 
     return {
         "question" : question,

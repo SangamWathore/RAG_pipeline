@@ -115,3 +115,29 @@ def test_ask_rejects_question_over_2000_characters(authenticated_client):
     )
 
     assert response.status_code == 422
+
+
+def test_ask_returns_clear_error_when_no_documents_are_indexed(
+    authenticated_client,
+    monkeypatch,
+):
+    def fail_to_load_service():
+        raise FileNotFoundError(
+            "No indexed documents are available. Upload a document first."
+        )
+
+    monkeypatch.setattr(
+        rag_routes,
+        "get_rag_service",
+        fail_to_load_service,
+    )
+
+    response = authenticated_client.post(
+        "/ask",
+        json={"question": "What is this document about?"},
+    )
+
+    assert response.status_code == 503
+    assert response.json()["detail"] == (
+        "No indexed documents are available. Upload a document first."
+    )
