@@ -61,7 +61,7 @@ def delete_document(document_id:str,
     deleted = document_service.delete_document(
         document_id=document_id,
         uploaded_by=current_user.id
-    ),
+    )
     
     if deleted is None:
             raise HTTPException(

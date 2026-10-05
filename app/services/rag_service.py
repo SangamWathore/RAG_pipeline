@@ -25,12 +25,14 @@ class RAGService:
         )
 
         context = "\n\n".join(
-            doc.page_content
-            for doc in relevant_documents
+            f"[Source {index}]\n{doc.page_content}"
+            for index, doc in enumerate(relevant_documents, start=1)
         )
 
         prompt = f"""
-Answer the question using the context below.
+Answer the question using only the context below.
+When referring to information, cite the source number in square brackets,
+for example [Source 1]. If the answer is not supported by the context, say so.
 
 Context:
 {context}
@@ -43,4 +45,13 @@ Answer:
 
         response = self.llm.invoke(prompt)
 
-        return response.content
+        sources = []
+        for doc in relevant_documents:
+            metadata = doc.metadata or {}
+            sources.append({
+                "source": metadata.get("source") or metadata.get("filename"),
+                "page": metadata.get("page"),
+                "content": doc.page_content[:500],
+            })
+
+        return {"answer": response.content, "sources": sources}
