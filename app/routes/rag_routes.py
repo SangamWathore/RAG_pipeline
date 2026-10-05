@@ -23,7 +23,7 @@ def ask(
     question = request.question.strip()
     if not question:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail="Question cannot be empty",
         )
 
