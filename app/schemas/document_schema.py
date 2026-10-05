@@ -4,6 +4,8 @@ class DocumentResponse(BaseModel):
     filename:str
     path:str
     chunks:int
+    content_hash: str
+    uploaded_by: int
 
 class DocumentUploadResponse(BaseModel):
     message:str

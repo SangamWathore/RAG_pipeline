@@ -12,13 +12,9 @@ from app.schemas.auth_schema import (
 )
 from app.services.auth_service import AuthService
 
-
 router = APIRouter(prefix="/auth",tags=["Authentication"])
 
-
-@router.post("/register",
-        response_model=UserResponse
-)
+@router.post("/register",response_model=UserResponse)
 def register(
         request:RegisterRequest,
         db:Session = Depends(get_db)
@@ -42,9 +38,7 @@ def register(
 
 
 
-@router.post("/login",
-        response_model=TokenResponse
-    )
+@router.post("/login",response_model=TokenResponse)
 def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db:Session = Depends(get_db)

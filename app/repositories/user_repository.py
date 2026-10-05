@@ -1,3 +1,7 @@
+"""here we are creating a user repository to handle the database
+ operations, This repository will provide methods to get a user
+ by username, get a user by ID, and create a new user in the database."""
+
 from sqlalchemy.orm import Session
 from app.models.user_model import User
 
